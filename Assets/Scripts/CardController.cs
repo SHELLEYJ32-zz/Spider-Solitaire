@@ -28,6 +28,7 @@ public class CardController : MonoBehaviour
         if (active && !finished)
         {
             GameController.instance.ProcessClickOnCard(gameObject.GetComponent<CardController>());
+            gameObject.GetComponent<AudioSource>().Play();
         }
 
     }

@@ -13,6 +13,7 @@ public class ButtonController : MonoBehaviour
         //enable reset button
         GameObject.Find("ResetButton").gameObject.GetComponent<Button>().interactable = true;
 
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     public void ResetGame()
@@ -22,6 +23,8 @@ public class ButtonController : MonoBehaviour
         GameObject.Find("ResetButton").gameObject.GetComponent<Button>().interactable = false;
         //enable start button
         GameObject.Find("StartButton").gameObject.GetComponent<Button>().interactable = true;
+
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
 

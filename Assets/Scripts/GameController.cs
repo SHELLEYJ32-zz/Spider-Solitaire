@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour
     private ColumnController[] tableau;
     private List<CardController> movables;
     public CardController cardPrefab;
+    public Sprite placeholderSprite;
+    public AudioClip clearSound;
+    public AudioClip winSound;
 
     void Awake()
     {
@@ -60,11 +63,19 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             if (tableau[i].CheckComplete())
+            {
                 tableau[i].Clear();
+                gameObject.GetComponent<AudioSource>().clip = clearSound;
+                gameObject.GetComponent<AudioSource>().Play();
+            }
         }
 
         if (CheckEndGame())
+        {
+            gameObject.GetComponent<AudioSource>().clip = winSound;
+            gameObject.GetComponent<AudioSource>().Play();
             Reset();
+        }
     }
 
     void CreatTableauPlaceholder()
@@ -75,20 +86,16 @@ public class GameController : MonoBehaviour
         {
             tableau[i] = new ColumnController();
             CardController placeholder = Instantiate(cardPrefab, new Vector3(columnInitPos.x + 1.55f * i, columnInitPos.y, 1), Quaternion.identity);
+            placeholder.frontSprite = placeholderSprite;
+            placeholder.backSprite = placeholderSprite;
             placeholder.myColumn = i;
             placeholder.myRow = 0;
             placeholder.tag = "Untagged";
-            placeholder.GetComponent<SpriteRenderer>().enabled = false;
             tableau[i].column.Add(placeholder);
         }
 
     }
 
-    public void StartGame()
-    {
-        CreateTableau();
-        GameObject.Find("StockPlaceholder").GetComponent<StockController>().isActive = true;
-    }
 
     //Spider One Suit version with 8 sets of Spades
     List<CardController> CreateStock()
@@ -125,6 +132,12 @@ public class GameController : MonoBehaviour
             stock[randomIdx1] = randomCard2;
             stock[randomIdx2] = randomCard1;
         }
+    }
+
+    public void StartGame()
+    {
+        CreateTableau();
+        GameObject.Find("StockPlaceholder").GetComponent<StockController>().isActive = true;
     }
 
     void CreateTableau()

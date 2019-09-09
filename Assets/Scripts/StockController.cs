@@ -12,6 +12,7 @@ public class StockController : MonoBehaviour
         if (isActive)
         {
             GameController.instance.AddNewRow();
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 }

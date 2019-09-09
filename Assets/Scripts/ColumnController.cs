@@ -109,7 +109,6 @@ public class ColumnController : MonoBehaviour
             movables[i].myColumn = col;
             movables[i].transform.localScale /= 1.1f;
             column.Add(movables[i]);
-
         }
 
     }
